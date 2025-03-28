@@ -10,6 +10,15 @@ import BankDetailsPage from "./pages/BankDetailsPage";
 import EnterpriseDetailsPage from "./pages/EnterpriseDetailsPage";
 import EnterprisesPage from "./pages/EnterprisesPage";
 import ProjectDetailsPage from "./pages/SalaryProjectDetailsPage";
+import AccountDetailsPage from "./pages/AccountDetailsPage";
+import LoanPage from "./pages/LoanPage";
+import LoanRepayPage from "./pages/LoanRepayPage";
+import EAccountDetailsPage from "./pages/EAccountDetailsPage";
+import MainPage from "./pages/MainPage";
+import Footer from "./components/Footer";
+import OperatorPanel from "./pages/OperatorPanel";
+import ManagePanel from "./pages/ManagePanel";
+import AdminPanel from "./pages/AdminPanelPage";
 
 function App() {
   const [isAuth, setIsAuth] = useState(false);
@@ -29,6 +38,7 @@ function App() {
       }
     };
     checkAuth();
+    setRole(localStorage.getItem("role"));
   }, []);
 
   return (
@@ -36,17 +46,27 @@ function App() {
       <Header isAuth={isAuth} setIsAuth={setIsAuth} role={role} />
       <div className="container mt-4">
         <Routes>
+          <Route path="/" element={<MainPage />} />
           <Route path="/profile" element={<ProfilePage setRole={setRole} />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage setIsAuth={setIsAuth} />} />
           <Route path="/banks" element={<BanksPage />} />
           <Route path="/banks/:id" element={<BankDetailsPage />} />
           <Route path="/accounts" element={<AccountsPage />} />
+          <Route path="/accounts/:id" element={<AccountDetailsPage />} />
+          <Route path="/loans" element={<LoanPage />} />
+          <Route path="/loans/repay/:id" element={<LoanRepayPage />} />
           <Route path="/enterprises" element={<EnterprisesPage />} />
           <Route path="/enterprise/:id" element={<EnterpriseDetailsPage />} />
           <Route path="/salary-project/:id" element={<ProjectDetailsPage />} />
+          <Route path="/eaccounts/:id" element={<EAccountDetailsPage />} />
+
+          <Route path="/operator-panel" element={<OperatorPanel />} />
+          <Route path="/manager-panel" element={<ManagePanel />} />
+          <Route path="/admin-panel" element={<AdminPanel />} />
         </Routes>
       </div>
+      <Footer />
     </Router>
   );
 }

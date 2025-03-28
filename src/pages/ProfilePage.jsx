@@ -24,6 +24,7 @@ const ProfilePage = ({ setRole }) => {
       const result = await response.json();
       setProfile(result.data);
       setRole(result.data.role);
+      localStorage.setItem("role", result.data.role); 
     } catch (err) {
       setError(err.message);
     } finally {

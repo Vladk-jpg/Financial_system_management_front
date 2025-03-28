@@ -16,7 +16,9 @@ const Header = ({ isAuth, setIsAuth, role }) => {
       }
 
       setIsAuth(false);
+      localStorage.setItem("role", "");
       navigate("/login");
+      navigate(0);
     } catch (error) {
       console.error("Ошибка при выходе:", error);
     }
@@ -26,7 +28,7 @@ const Header = ({ isAuth, setIsAuth, role }) => {
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container">
         <NavLink className="navbar-brand" to="/">
-          🏦 Банк
+          🏦 Главная
         </NavLink>
         <button
           className="navbar-toggler"
@@ -47,25 +49,50 @@ const Header = ({ isAuth, setIsAuth, role }) => {
                 Профиль
               </NavLink>
             </li>
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/banks">
-                Банки
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/accounts">
-                Счета
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/credits">
-                Кредиты
-              </NavLink>
-            </li>
+            {role !== "OPERATOR" && role !== "MANAGER" && (
+              <>
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/banks">
+                    Банки
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/accounts">
+                    Счета
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/loans">
+                    Кредиты и рассрочки
+                  </NavLink>
+                </li>
+              </>
+            )}
             {(role === "ADMIN" || role === "ENTERPRISE_SPECIALIST") && (
               <li className="nav-item">
                 <NavLink className="nav-link" to="/enterprises">
                   Предприятия
+                </NavLink>
+              </li>
+            )}
+            {(role === "OPERATOR" || role === "MANAGER") && (
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/operator-panel">
+                  Панель оператора
+                </NavLink>
+              </li>
+            )}
+            {(role === "MANAGER") && (
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/manager-panel">
+                  Панель менеджера
+                </NavLink>
+              </li>
+            )}
+            {role === "ADMIN" && (
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/admin-panel">
+                  Админ панель
                 </NavLink>
               </li>
             )}

@@ -75,8 +75,12 @@ const BankDetailsPage = () => {
 
   const handleEnterpriseSubmit = async (e) => {
     e.preventDefault();
+    var role = localStorage.getItem('role');
+    var url = "http://localhost:3000/enterprise/create";
+    if (role === "ADMIN")
+      url = "http://localhost:3000/enterprise/admin/create";
     try {
-      const response = await fetch("http://localhost:3000/enterprise/create", {
+      const response = await fetch(url, {
         method: "POST",
         credentials: "include",
         headers: {
